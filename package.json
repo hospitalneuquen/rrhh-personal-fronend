@@ -32,7 +32,7 @@
     "bowser": "^2.1.0",
     "core-js": "^2.5.4",
     "file-saver": "^2.0.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "ngx-permissions": "^8.0.0",
     "rxjs": "6.3.3",
     "rxjs-compat": "6.3.3",
