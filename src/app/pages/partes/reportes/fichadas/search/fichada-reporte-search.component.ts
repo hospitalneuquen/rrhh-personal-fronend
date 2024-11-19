@@ -23,7 +23,7 @@ export class FichadaReporteSearchFormComponent extends CRUDSearchFormComponent i
     
     // Search form select options
     public servicioOpciones = []
-
+    
     constructor(
             formBuilder: FormBuilder,
             private objectService: ParteService,
@@ -37,8 +37,8 @@ export class FichadaReporteSearchFormComponent extends CRUDSearchFormComponent i
         this.canProcesarParte = await this.authService.check('partes:parte:procesar_parte');
         this.serviciosAllowed = this.getServiciosAllowed();
         this.initFormSelectOptions();
-        this.searchForm = this.initSearchForm();
-        this.buscar();
+       this.searchForm = this.initSearchForm();
+    this.buscar();
     }
 
     ngAfterViewInit(){
@@ -62,18 +62,21 @@ export class FichadaReporteSearchFormComponent extends CRUDSearchFormComponent i
             this.ubicacionService.get({}).subscribe(servicios =>
                 this.servicioOpciones = servicios)
         }
-        
+
         if (this.serviciosAllowed && this.serviciosAllowed.length){
             this.servicioOpciones = this.serviciosAllowed;
         }       
     }
-
     initSearchForm(){
         return this.formBuilder.group({
             fechaDesde  : [ moment().toDate()],
             fechaHasta  : [ moment().add(1, 'days').toDate()],
-            ubicacion   : [],
-            agente      : []
+            ubicacion: [
+                (this.serviciosAllowed.length && !this.canProcesarParte)
+                ? this.serviciosAllowed[0]
+                : null
+            ],
+            agente : []    
         });
     }
 
@@ -100,19 +103,19 @@ export class FichadaReporteSearchFormComponent extends CRUDSearchFormComponent i
 
 
     search(searchParams){
-        if (this.searchForm.valid){
-            this.objectService.getFichadasAgentesReporte(searchParams).subscribe(
-                objects => {
-                    this.searchEnd.emit(objects);
-                },
-                (err) => {
-                    this.searchEnd.emit([])
-                }
-            );
-        }
-        else{
-            this.searchEnd.emit([])
-        }
+            if (this.searchForm.valid){
+                this.objectService.getFichadasAgentesReporte(searchParams).subscribe(
+                    objects => {
+                        this.searchEnd.emit(objects);
+                    },
+                    (err) => {
+                        this.searchEnd.emit([])
+                    }
+                );
+            }
+            else{
+                this.searchEnd.emit([])
+            }
     }
 
     /**
@@ -124,7 +127,7 @@ export class FichadaReporteSearchFormComponent extends CRUDSearchFormComponent i
      */
     getServiciosAllowed(){
         if (this.serviciosAllowed) return this.serviciosAllowed;
-        
+    
         return (!this.canProcesarParte)? this.authService.servicios: [];
     }
 }
