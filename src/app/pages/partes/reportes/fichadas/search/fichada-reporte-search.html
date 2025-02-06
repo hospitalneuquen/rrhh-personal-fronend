@@ -23,7 +23,19 @@
                     (change)="buscar($event)">
                 </plex-datetime>
             </div>
-            <div class="col-md-4">
+            <div  *ngIf= "!canProcesarParte" class="col-md-4">
+                <plex-select
+                    [idField]="'_id'"
+                    [data]="servicioOpciones"
+                    formControlName="ubicacion"
+                    name="ubicacion"
+                    label="Ubicación"
+                    required
+                    placeholder="Seleccione ubicación..."
+                    (change)="buscar($event)">
+                </plex-select>
+            </div>
+            <div *ngIf= "canProcesarParte" class="col-md-4" >
                 <plex-select
                     [idField]="'_id'"
                     [data]="servicioOpciones"
