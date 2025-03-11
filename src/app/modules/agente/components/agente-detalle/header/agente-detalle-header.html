@@ -22,14 +22,28 @@
             <article class="d-flex flex-row">
                 <div class="d-flex flex-row mr-4">
                     <b>Documento</b>
-                <div class="ml-2 mb-2">
-                    <p>{{ agente.documento | title }}</p>
-                </div>
+                    <div class="ml-2 mb-2">
+                        <p>{{ agente.documento | title }}</p>
+                    </div>
                 </div>
                 <div class="d-flex flex-row mr-4">
                     <b>Legajo</b>
+                    <div class="ml-2 mb-2">
+                        <p>{{ agente.numero | title }}</p>
+                    </div>
+                </div>                   
+            </article>
+            <article>
+                <div class="d-flex flex-row mr-2"> 
+                    <b>Ubicación/Servicio</b>
                 <div class="ml-2 mb-2">
-                    <p>{{ agente.numero | title }}</p>
+                    <p>{{ agente.situacionLaboral.cargo.ubicacion.nombre | title}}</p>
+                </div>
+                </div>
+                <div class="d-flex flex-row mr-2">
+                    <b>Interno</b>
+                <div class="ml-2 mb-2">
+                    <p>{{agente.situacionLaboral.cargo.ubicacion.telefono | title }}</p>
                 </div>
                 </div>
             </article>
