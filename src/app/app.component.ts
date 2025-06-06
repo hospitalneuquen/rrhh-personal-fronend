@@ -29,7 +29,7 @@ export class AppComponent {
         this.plex.updateMenu(this.menuList);
     }
     public showRibbon() {
-        return environment.environmentName === 'demo' || environment.environmentName === 'testing';
+        return environment.environmentName === 'demo';
     }
 
     public ribbonLabel() {
@@ -43,7 +43,7 @@ export class AppComponent {
             case 'demo':
                 return 'warning';      
             case 'development':
-                return 'sucess';
+                return 'info';
         }
     }
 }
