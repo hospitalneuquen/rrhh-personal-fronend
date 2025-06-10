@@ -28,4 +28,22 @@ export class AppComponent {
         // this.initStatusCheck();
         this.plex.updateMenu(this.menuList);
     }
+    public showRibbon() {
+        return environment.environmentName === 'demo';
+    }
+
+    public ribbonLabel() {
+        return environment.environmentName.toUpperCase();
+    }
+
+    public ribbonType(){
+        switch (environment.environmentName) {
+            case 'produccion':
+                return 'info';
+            case 'demo':
+                return 'warning';      
+            case 'development':
+                return 'info';
+        }
+    }
 }
