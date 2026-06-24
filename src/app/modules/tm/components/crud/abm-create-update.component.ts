@@ -171,7 +171,7 @@ export abstract class ABMCreateUpdateComponent implements OnInit {
 
     public onError(obj:any){
     }
-
+//para ver 
     public onHistoria(){
         if (!this.modelName) return; // Alertar mal configurado
         this.router.navigate(['/historia', this.modelName, this._objectID]);
