@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit, OnDestroy, Input, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { Articulo } from 'src/app/models/Articulo';
@@ -13,7 +13,7 @@ import { AusentismoService } from 'src/app/services/ausentismo.service';
     selector: 'app-ausentismo-search-form',
     templateUrl: 'ausentismo-search-form.html'
 })
-export class AusentismoSearchFormComponent implements OnInit, OnDestroy {
+export class AusentismoSearchFormComponent implements OnInit, OnDestroy, AfterViewInit {
     @Input() agente: Agente;
     
     private timeoutHandle: number;
@@ -41,6 +41,15 @@ export class AusentismoSearchFormComponent implements OnInit, OnDestroy {
             this.buscar();
         });
         this.buscar();
+    }
+
+    ngAfterViewInit() {
+    setTimeout(() => {
+        this.searchForm.patchValue({
+            fechaDesde: moment().subtract(3, 'months').year(2023).toDate(),
+            fechaHasta: moment().year(2023).toDate()
+        });
+    }, {emitEvent: false });
     }
 
     ngOnDestroy(): void {
