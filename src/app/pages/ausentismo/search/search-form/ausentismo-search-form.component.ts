@@ -40,18 +40,24 @@ export class AusentismoSearchFormComponent implements OnInit, OnDestroy, AfterVi
         this.searchForm.valueChanges.subscribe(() => {
             this.buscar();
         });
-        this.buscar();
+       
     }
 
-    ngAfterViewInit() {
-    setTimeout(() => {
-        this.searchForm.patchValue({
-            fechaDesde: moment().subtract(3, 'months').year(2023).toDate(),
-            fechaHasta: moment().year(2023).toDate()
-        });
-    }, {emitEvent: false });
+    ngAfterViewInit(){
+        // Parche para visualizar correctamente la fecha en el reactive form
+        window.setTimeout(() => {
+            if (this.searchForm){
+                 console.log('ANTES DEL PATCH:', this.searchForm.value);
+                this.searchForm.patchValue({ 
+                    fechaDesde: moment().year(2023).subtract(3, 'months').toDate(),
+                    fechaHasta: moment().year(2023).toDate(),
+                 }, { emitEvent: false });
+                  console.log('DESPUÉS DEL PATCH:', this.searchForm.value);
+                 this.buscar();
+            }
+        }, 0);
     }
-
+     
     ngOnDestroy(): void {
         clearInterval(this.timeoutHandle);
     }
@@ -84,14 +90,17 @@ export class AusentismoSearchFormComponent implements OnInit, OnDestroy, AfterVi
      */
     public buscar() {
         if (!this.searchForm || !this.searchForm.valid) return;
+        console.log('VALORES DEL FORM:', this.searchForm.value);
         // Cancela la búsqueda anterior
         if (this.timeoutHandle) {
             window.clearTimeout(this.timeoutHandle);
         }
         const searchValues = this.prepareSearchParams(this.searchForm.value);
+        console.log('PARAMETROS PREPARADOS:', searchValues);
         this.searchStart.emit();
         this.timeoutHandle = window.setTimeout(() => {
             this.timeoutHandle = null;
+            console.log('ENVIANDO:', searchValues);
             this.searchService.searchAusentismo(searchValues)
                 .subscribe(resultado => {
                     this.searchEnd.emit(resultado);
