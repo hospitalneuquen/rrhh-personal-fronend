@@ -45,7 +45,7 @@
     </plex-label>
     
     <ng-container *ngIf="!modoEscritura">
-        <plex-label class="wp-13" titulo="{{ item.fecha | fecha:'utc' }}" [tituloBold]="false"></plex-label>
+        <plex-label class="wp-13" titulo="{{ item.fecha | fecha}}" [tituloBold]="false"></plex-label> 
         <plex-label class="wp-12" titulo="{{ item.turno?.nombre | title }}" [tituloBold]="false"></plex-label>
         <plex-label class="wp-18" titulo="{{ item.justificacion?.nombre | title }}" [tituloBold]="false"></plex-label>
         <plex-label class="wp-15" titulo="{{ item.observaciones | title }}" [tituloBold]="false"></plex-label>
