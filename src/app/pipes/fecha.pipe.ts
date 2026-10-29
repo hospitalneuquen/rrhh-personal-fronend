@@ -12,7 +12,7 @@ export class FechaPipe implements PipeTransform {
     transform(value: any, arg1: string): any {
         if ( value ){
             if (arg1) {
-                if (arg1 === 'diahora') return moment(value).utc().format('ddd DD/MM HH:mm');
+                if (arg1 === 'diahora') return moment(value).utc().format('ddd DD/MM/AAAA HH:mm');
                 if (arg1 === 'utc') return moment(value).utc().format('DD/MM/YYYY');
                 if (arg1 === 'dia') return moment(value).utc().format('dddd');
                 if (arg1 === 'diasmall') return moment(value).utc().format('dd');
